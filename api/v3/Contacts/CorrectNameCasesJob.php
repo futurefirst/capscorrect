@@ -70,9 +70,10 @@ function civicrm_api3_contacts_correctnamecasesjob($params) {
     'offset' => $lastContactExaminedOffset,
     'rowCount' => $numberOfContactsToRun,
     'return' => 'first_name, last_name',
+    'sort' => 'contact_id ASC',
   );
   $getContactsApiResults = civicrm_api('Contact', 'get', $getContactsApiParams);
-  if ( civicrm_error($getContactsApiResults) ){    
+  if ( civicrm_error($getContactsApiResults) ){
     throw new API_Exception(/*errorMessage*/ 'Unable to complete scheduled job, error fetching contacts.', /*errorCode*/ 2);
   }
   
@@ -91,7 +92,6 @@ function civicrm_api3_contacts_correctnamecasesjob($params) {
         'last_name' => $aContact['last_name'],
       );
       $contactWithCorrectedNameApiResults = civicrm_api('Contact', 'create', $contactWithCorrectedNameApiParams);
-
       // Update the contacts corrected counter
       $contactsCorrectedThisRun++;
     }

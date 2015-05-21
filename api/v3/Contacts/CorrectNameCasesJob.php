@@ -28,7 +28,7 @@ function contacts_correctnamecasesjob_correct_name_case(&$aName){
   // See if the name is empty.
   if (strlen($aName) != 0){
     // Check if the name needs correction.
-    if ($aName == strtolower($aName) || $aName == strtoupper($aName)){
+    if ($aName == strtolower($aName) || ($aName == strtoupper($aName) && strlen($aName) > 1)){
       // Correct the name by only setting the first letter to upper-case
       $aName = strtoupper($aName[0]) . strtolower(substr($aName, 1));
       // Signal that a change was made

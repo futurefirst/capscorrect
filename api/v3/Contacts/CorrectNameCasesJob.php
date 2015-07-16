@@ -15,26 +15,34 @@ function _civicrm_api3_contacts_correctnamecasesjob_spec(&$spec) {
 /**
  * This function will set any string that is:
  *  - all uppercase or
- *  - all lowercase and
+ *  - all lowercase or
+ *  - contains leading and/or trailing whitespace and
  *  - not empty
- * to be capitalised correcty with the first letter on upper case.
- * It is ment to clean contact names.
+ * to be trimmed and capitalised correctly with the first letter on upper case.
+ * It is meant to clean contact names.
  * Major credits to Xavier Dutoit (<civicrm@tttp.eu>) and the his extension
  * https://civicrm.org/extensions/normalise-data-entered-firstname-last-name .
  * @param string $aName - a string that should contain the name
  * @return boolean - True if the string got modified and false if it didn't
  */
-function contacts_correctnamecasesjob_correct_name_case(&$aName){
+function contacts_correctnamecasesjob_correct_name_case(&$aName) {
   // See if the name is empty.
-  if (strlen($aName) != 0){
+  if (strlen($aName) != 0) {
     // Check if the name needs correction.
-    if ($aName == strtolower($aName) || ($aName == strtoupper($aName) && strlen($aName) > 1)){
-      // Correct the name by only setting the first letter to upper-case
+    if (
+      $aName == strtolower($aName) ||
+      ($aName == strtoupper($aName) && strlen($aName) > 1) ||
+      $aName != trim($aName)
+    ) {
+      // Correct the name by only setting the first letter to upper-case,
+      // and trimming leading and trailing whitespace
+      $aName = trim($aName);
       $aName = strtoupper($aName[0]) . strtolower(substr($aName, 1));
       // Signal that a change was made
       return TRUE;
     }
   }
+
   // No change was made
   return FALSE;
 }

@@ -16,7 +16,7 @@ return array (
       'description' => 'Call Contacts.CorrectNameCasesJob API',
       'run_frequency' => 'Daily',
       'api_entity' => 'Contacts',
-      'api_action' => 'CorrectNameCasesJob',
+      'api_action' => 'Correctnamecasesjob',
       'parameters' => SCHEDULED_JOB_PARAM_DEFAULT_NAME . "=" . DEFAULT_DAILY_CONTACTS_CORRECTED, 
     ),
   ),

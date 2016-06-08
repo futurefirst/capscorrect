@@ -18,6 +18,7 @@
   <compatibility>
     <ver>4.4</ver>
     <ver>4.5</ver>
+    <ver>4.6</ver>
   </compatibility>
   <comments>The number of contacts scanned each day can be set in Civi's scheduled job settings page.</comments>
   <civix>

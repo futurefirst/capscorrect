@@ -24,5 +24,9 @@
   <comments>The number of contacts scanned each day can be set in Civi's scheduled job settings page.</comments>
   <civix>
     <namespace>CRM/Capscorrect</namespace>
+    <format>22.05.2</format>
   </civix>
+  <mixins>
+    <mixin>mgd-php@1.0.0</mixin>
+  </mixins>
 </extension>

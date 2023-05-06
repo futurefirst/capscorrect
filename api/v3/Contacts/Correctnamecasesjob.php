@@ -58,7 +58,8 @@ function contacts_correctnamecasesjob_correct_name_case(&$aName) {
  */
 function civicrm_api3_contacts_correctnamecasesjob($params) {
 
-  $lastContactExaminedOffset = CRM_Core_BAO_Setting::getItem(CAPSCORRECT_EXTENSION_NAME, CAPSCORRECT_LAST_CONTACT_OFFSET);
+  $lastContactExaminedOffset = Civi::settings()->get(CAPSCORRECT_LAST_CONTACT_OFFSET);
+
   // See if the returned value is NULL or negative
   if ( $lastContactExaminedOffset === NULL || $lastContactExaminedOffset < 0 ) {
     throw new API_Exception(/*errorMessage*/ 'Unable to complete scheduled job, the offset was not returned.', /*errorCode*/ 1);
@@ -106,14 +107,13 @@ function civicrm_api3_contacts_correctnamecasesjob($params) {
     }
   }
   // Update the total contacts corrected setting value
-  $totalContactsCorrected = CRM_Core_BAO_Setting::getItem(CAPSCORRECT_EXTENSION_NAME, CAPSCORRECT_TOTAL_CONTACTS_CORRECTED);
+  $totalContactsCorrected = Civi::settings()->get(CAPSCORRECT_TOTAL_CONTACTS_CORRECTED);
   $totalContactsCorrected += $contactsCorrectedThisRun;
-  CRM_Core_BAO_Setting::setItem($totalContactsCorrected, CAPSCORRECT_EXTENSION_NAME, CAPSCORRECT_TOTAL_CONTACTS_CORRECTED);
+  Civi::settings()->set(CAPSCORRECT_TOTAL_CONTACTS_CORRECTED, $totalContactsCorrected);
 
   // Update the offset setting
   $lastContactExaminedOffset += $getContactsApiResults['count'];
-  CRM_Core_BAO_Setting::setItem($lastContactExaminedOffset, CAPSCORRECT_EXTENSION_NAME, CAPSCORRECT_LAST_CONTACT_OFFSET);
-
+  Civi::settings()->set(CAPSCORRECT_LAST_CONTACT_OFFSET, $lastContactExaminedOffset);
 
   // Return values array
   $apiReturnValues = array(
